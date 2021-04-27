@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container" *ngIf="!changeChannelMode">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" [routerLink]="['']">
             <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
         </a>
         <button type="button" class="btn btn-light change-channel-btn" (click)="showChannelChanger()">
@@ -24,7 +24,13 @@
 
 <div class="container navbar-top-fix pr-0 pl-0">
     <div *ngIf="isLoading" class="loader">loading</div>
-    <div *ngIf="!isLoading" class="table-responsive-lg">
+
+    <div *ngIf="!isLoading && videos.length == 0" class="no-data">
+        <i class="fas fa-video-slash"></i>
+        <h3>No videos found</h3>
+    </div>
+
+    <div *ngIf="!isLoading && videos.length > 0" class="table-responsive-lg">
         <table class="table">
             <thead>
                 <th></th>

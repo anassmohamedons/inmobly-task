@@ -9,6 +9,11 @@
         background-size: 24px;
         border: none;
         border-radius: 50%;
+        transition: background-color .2s;
+
+        &:hover {
+            background-color: #e6e6e6;
+        }
     }
 }
 
@@ -20,6 +25,11 @@
     background-size: 24px;
     border: none;
     border-radius: 50%;
+    transition: background-color .2s;
+
+    &:hover {
+        background-color: #e6e6e6;
+    }
 }
 
 .thumbnail {

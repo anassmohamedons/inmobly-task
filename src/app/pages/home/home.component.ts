@@ -39,8 +39,13 @@ export class HomeComponent implements OnInit {
   }
 
   searchVideos = (e: KeyboardEvent): void => {
-    if (e.key == "Enter" && this.searchQuery != "") {
+    if (e.key == "Enter") {
       this.isLoading = true
+
+      if (this.searchQuery == "") {
+        this.fetchVideos()
+        return
+      }
 
       const queryParts = this.searchQuery.split(' ')
 
@@ -49,8 +54,6 @@ export class HomeComponent implements OnInit {
         this.handleResponse(res)
       })
     }
-    else if (this.searchQuery == "")
-      this.fetchVideos()
   }
 
   handleResponse = (res: VideoResponse) => {
@@ -63,6 +66,8 @@ export class HomeComponent implements OnInit {
     this.isLoading = false
     this.videos = res.items
     this.videosUnsorted = res.items
+    this.sortedBy = ''
+    this.sortedByType = ''
 
     this.nextPageToken = res.items.length < this.api.resultsPerPage ? '' : res.nextPageToken
     this.prevPageToken = res.items.length < this.api.resultsPerPage ? '' : res.prevPageToken

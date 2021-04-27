@@ -9,12 +9,32 @@ body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
 .navbar {
   background: white !important;
   border-bottom: solid thin #F1F1F1;
+
+  .navbar-brand {
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: .5;
+    }
+  }
 }
 
 .navbar-top-fix {
   padding-top: 67px;
   border-left: solid thin #dee2e6;
   border-right: solid thin #dee2e6;
+  border-bottom: solid thin #dee2e6;
+}
+
+.no-data {
+  padding: 100px 15px 50px;
+  text-align: center;
+  color: #5a5a5a;
+
+  i {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
 }
 
 .loader {

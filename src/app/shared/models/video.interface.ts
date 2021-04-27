@@ -14,7 +14,7 @@ export interface VideoSnippet {
     description: string
     publishedAt: string
     thumbnails: {
-        default: {
+        medium: {
             url: string
         }
     }

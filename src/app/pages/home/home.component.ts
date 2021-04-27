@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Video, VideoResponse } from 'src/app/shared/models/video.interface';
 import { YoutubeService } from 'src/app/shared/services/youtube.service';
 
@@ -10,17 +8,19 @@ import { YoutubeService } from 'src/app/shared/services/youtube.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort
-
   channelId = 'UCWOA1ZGywLbqmigxE4Qlvuw'
 
-  dataSource: MatTableDataSource<Video>
+  videos: Video[] = []
+  videosUnsorted: Video[] = []
   gridColumns = ['thumbnail', 'title', 'publishedAt', 'actions']
   nextPageToken: string
   prevPageToken: string
 
   searchQuery = ''
   resultsPerPage = 8
+
+  sortedBy: string
+  sortedByType: string
 
   constructor(private api: YoutubeService) { }
 
@@ -52,8 +52,8 @@ export class HomeComponent implements OnInit {
       item.publishedAt = item.snippet.publishedAt
     })
 
-    this.dataSource = new MatTableDataSource(res.items)
-    this.dataSource.sort = this.sort
+    this.videos = res.items
+    this.videosUnsorted = res.items
 
     this.nextPageToken = res.items.length < this.api.resultsPerPage ? '' : res.nextPageToken
     this.prevPageToken = res.items.length < this.api.resultsPerPage ? '' : res.prevPageToken
@@ -66,5 +66,27 @@ export class HomeComponent implements OnInit {
       this.fetchVideos(this.nextPageToken)
     else if (type == 'prev' && this.prevPageToken)
       this.fetchVideos(this.prevPageToken)
+  }
+
+  sortBy = (column: string) => {
+    if (this.sortedBy == column)
+      this.sortedByType = this.sortedByType == 'asc' ? 'desc' : 'asc'
+    else
+      this.sortedByType = 'asc'
+
+    this.sortedBy = column
+
+    if (column == 'title') {
+      if (this.sortedByType == 'asc')
+        this.videos = this.videos.sort((a, b) => a.title.localeCompare(b.title))
+      else
+        this.videos = this.videos.sort((a, b) => b.title.localeCompare(a.title))
+    }
+    else if (column == 'publishedAt') {
+      if (this.sortedByType == 'asc')
+        this.videos = this.videos.sort((a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime())
+      else
+        this.videos = this.videos.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    }
   }
 }

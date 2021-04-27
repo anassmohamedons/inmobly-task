@@ -1,3 +1,105 @@
 .search-input {
-    max-width: 200px;
+    padding: 25px 50px 25px 85px;
+    width: 285px;
+    background: url('/assets/search.svg') no-repeat 45px 50% #F5F5F5;
+    background-size: 24px;
+    border: none;
+    border-radius: 50%;
+}
+
+.thumbnail {
+    height: 100px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.title-header {
+    display: block;
+    min-width: 200px;
+}
+
+.publishedat-header {
+    display: block;
+    min-width: 100px;
+}
+
+.table {
+    border-collapse: separate; 
+    border-spacing: 0 5px;
+    margin-bottom: 0;
+
+    th {
+        border: none;
+        padding: 20px 0;
+    }
+
+    tr {
+        &:hover {
+            background: #EEEEEE;
+        }
+
+        td {
+            vertical-align: middle;
+            border-bottom: 1px solid #dee2e6;
+
+            button {
+                padding: 8px 30px;
+                font-weight: bold;
+                color: black;
+                border-color: #CBCBCB;
+
+                &:hover {
+                    background: #E02C33;
+                    border-color: #E02C33;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.sortable {
+    span {
+        cursor: pointer;
+    }
+
+    &.not-active, &.active ~ th {
+        opacity: .5;
+    }
+}
+
+.paginate-btn {
+    background: #DCDCDC;
+    border-color: #DCDCDC;
+    color: #848484;
+    font-size: 24px;
+    line-height: 20px;
+
+    &:not([disabled]):hover {
+        background: #aaaaaa;
+        color: black;
+    }
+}
+
+.search-container {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 609px) {
+    .search-container {
+        width: 100%;
+        margin-left: 0;
+
+        .search-input {
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+}
+
+@media screen and (max-width: 311px) {
+    .change-channel-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
 }

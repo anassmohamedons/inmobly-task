@@ -1,43 +1,60 @@
-<mat-toolbar>
-    <span><img src="assets/logo.png" alt="logo" height="35"></span>
-    <span class="toolbar-spacer"></span>
-    <input type="text" class="form-control rounded-pill search-input" placeholder="Search by video title" [(ngModel)]="searchQuery" (keydown)="searchVideos($event)">
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
+        </a>
+        <button type="button" class="btn btn-light change-channel-btn">
+            <i class="fas fa-exchange-alt mr-2"></i> <strong>Change channel</strong>
+        </button>
+        <div class="search-container d-flex">
+            <input type="text" class="form-control rounded-pill search-input" placeholder="Search by video title"
+                [(ngModel)]="searchQuery" (keydown)="searchVideos($event)">
+        </div>
+    </div>
+</nav>
 
-<table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="thumbnail">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-            <img [src]="row.snippet.thumbnails.default.url" alt="video thumbnail">
-        </td>
-    </ng-container>
+<div class="container navbar-top-fix pr-0 pl-0">
+    <div class="table-responsive-lg">
+        <table class="table">
+            <thead>
+                <th></th>
+                <th class="sortable" [class.active]="sortedBy == 'title'"
+                    [class.not-active]="sortedBy == 'publishedAt'">
+                    <span (click)="sortBy('title')">
+                        <i class="fas fa-sort mr-2"></i> Title
+                    </span>
+                </th>
+                <th class="sortable" [class.active]="sortedBy == 'publishedAt'">
+                    <span (click)="sortBy('publishedAt')">
+                        <i class="fas fa-sort mr-2"></i> Publish date
+                    </span>
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let video of videos">
+                    <td>
+                        <img [src]="video.snippet.thumbnails.medium.url" class="thumbnail" alt="video thumbnail">
+                    </td>
+                    <td><span class="title-header">{{ video.title }}</span></td>
+                    <td><span class="publishedat-header">{{ video.publishedAt | date:'d-m-yyyy' }}</span></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary"
+                            (click)="showDetails(video.id)">Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-        <td mat-cell *matCellDef="let row">{{ row.title }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="publishedAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Publish date</th>
-        <td mat-cell *matCellDef="let row">{{ row.publishedAt | date:'d-m-yyyy' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-            <button mat-stroked-button (click)="showDetails(row.id)">Details</button>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="gridColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: gridColumns;"></tr>
-</table>
-
-<div>
-    <button mat-stroked-button (click)="paginate('prev')" [disabled]="!prevPageToken">
-        <mat-icon>arrow_left</mat-icon>
-    </button>
-    <button mat-stroked-button (click)="paginate('next')" [disabled]="!nextPageToken">
-        <mat-icon>arrow_right</mat-icon>
-    </button>
+    <div class="d-flex justify-content-end p-3">
+        <button type="button" class="btn btn-secondary paginate-btn mr-1" (click)="paginate('prev')"
+            [disabled]="!prevPageToken">
+            <i class="fas fa-caret-left"></i>
+        </button>
+        <button type="button" class="btn btn-secondary paginate-btn" (click)="paginate('next')"
+            [disabled]="!nextPageToken">
+            <i class="fas fa-caret-right"></i>
+        </button>
+    </div>
 </div>

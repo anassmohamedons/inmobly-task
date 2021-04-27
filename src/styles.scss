@@ -1,43 +1,24 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$inmobly-task-primary: mat-palette($mat-red, A700);
-$inmobly-task-accent: mat-palette($mat-red, A700);
-
-// The warn palette is optional (defaults to red).
-$inmobly-task-warn: mat-palette($mat-yellow);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$inmobly-task-theme: mat-light-theme((
-  color: (
-    primary: $inmobly-task-primary,
-    accent: $inmobly-task-accent,
-    warn: $inmobly-task-warn,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($inmobly-task-theme);
-
-/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
+* {
+  font-family: Nunito, "Helvetica Neue", sans-serif;
+}
 
-.toolbar-spacer {
-  flex: 1 1 auto;
+.navbar {
+  background: white !important;
+  border-bottom: solid thin #F1F1F1;
+}
+
+.navbar-top-fix {
+  padding-top: 67px;
+  border-left: solid thin #dee2e6;
+  border-right: solid thin #dee2e6;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
 }

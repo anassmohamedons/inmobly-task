@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "inmobly-task-58e70": {
+      "hosting": {
+        "inmobly-task": [
+          "inmobly-task-58e70"
+        ]
+      }
+    }
+  }
+}

@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyBIGbzhZePd9-EIMj4509SnmSBNo1WlDYM",
+    authDomain: "inmobly-task-58e70.firebaseapp.com",
+    projectId: "inmobly-task-58e70",
+    storageBucket: "inmobly-task-58e70.appspot.com",
+    messagingSenderId: "793870635691",
+    appId: "1:793870635691:web:46938a92b00a3935f45dee"
+  }
 };
 
 /*

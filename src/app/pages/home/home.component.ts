@@ -16,11 +16,16 @@ export class HomeComponent implements OnInit {
   nextPageToken: string
   prevPageToken: string
 
+  isLoading = true
+
   searchQuery = ''
   resultsPerPage = 8
 
   sortedBy: string
   sortedByType: string
+
+  changeChannelMode = false
+  newChannel: string
 
   constructor(private api: YoutubeService) { }
 
@@ -29,12 +34,15 @@ export class HomeComponent implements OnInit {
   }
 
   fetchVideos = (pageToken: string = ''): void => {
+    this.isLoading = true
     this.api.fetchVideos(this.channelId, pageToken).subscribe(this.handleResponse)
   }
 
   searchVideos = (e: KeyboardEvent): void => {
     if (e.key == "Enter" && this.searchQuery != "") {
-      let queryParts = this.searchQuery.split(' ')
+      this.isLoading = true
+
+      const queryParts = this.searchQuery.split(' ')
 
       this.api.searchVideos(this.channelId, this.searchQuery, '').subscribe((res: VideoResponse) => {
         res.items = res.items.filter((item: Video) => queryParts.some(q => item.snippet.title.toLowerCase().includes(q.toLowerCase())))
@@ -52,6 +60,7 @@ export class HomeComponent implements OnInit {
       item.publishedAt = item.snippet.publishedAt
     })
 
+    this.isLoading = false
     this.videos = res.items
     this.videosUnsorted = res.items
 
@@ -87,6 +96,28 @@ export class HomeComponent implements OnInit {
         this.videos = this.videos.sort((a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime())
       else
         this.videos = this.videos.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    }
+  }
+
+  showChannelChanger = () => {
+    this.newChannel = ''
+    this.changeChannelMode = !this.changeChannelMode
+  }
+
+  changeChannel = (e: KeyboardEvent) => {
+    if (e.key == "Enter" && this.newChannel != "") {
+      if (this.newChannel.startsWith('https://www.youtube.com/channel/')) {
+        const channelIdMatches = this.newChannel.match(/youtube.com\/channel\/([^#\&\?]*).*/)
+        if (channelIdMatches && channelIdMatches.length == 2) {
+          this.channelId = channelIdMatches[1]
+          this.fetchVideos()
+        }
+      } else {
+        this.channelId = this.newChannel
+        this.fetchVideos()
+      }
+
+      this.changeChannelMode = false
     }
   }
 }

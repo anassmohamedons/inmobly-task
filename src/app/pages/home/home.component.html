@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
+    <div class="container" *ngIf="!changeChannelMode">
         <a class="navbar-brand" href="#">
             <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
         </a>
-        <button type="button" class="btn btn-light change-channel-btn">
+        <button type="button" class="btn btn-light change-channel-btn" (click)="showChannelChanger()">
             <i class="fas fa-exchange-alt mr-2"></i> <strong>Change channel</strong>
         </button>
         <div class="search-container d-flex">
@@ -11,22 +11,32 @@
                 [(ngModel)]="searchQuery" (keydown)="searchVideos($event)">
         </div>
     </div>
+
+    <div class="container" *ngIf="changeChannelMode">
+        <button type="button" class="btn btn-light" (click)="changeChannelMode = !changeChannelMode">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <input type="text" class="form-control rounded-pill channel-input"
+            placeholder="Enter channel link or id and hit Enter" [(ngModel)]="newChannel"
+            (keydown)="changeChannel($event)">
+    </div>
 </nav>
 
 <div class="container navbar-top-fix pr-0 pl-0">
-    <div class="table-responsive-lg">
+    <div *ngIf="isLoading" class="loader">loading</div>
+    <div *ngIf="!isLoading" class="table-responsive-lg">
         <table class="table">
             <thead>
                 <th></th>
-                <th class="sortable" [class.active]="sortedBy == 'title'"
-                    [class.not-active]="sortedBy == 'publishedAt'">
+                <th class="sortable" [class.active]="sortedBy == 'title'" [class.not-active]="sortedBy == 'publishedAt'"
+                    [class.desc]="sortedByType == 'desc'">
                     <span (click)="sortBy('title')">
-                        <i class="fas fa-sort mr-2"></i> Title
+                        Title
                     </span>
                 </th>
-                <th class="sortable" [class.active]="sortedBy == 'publishedAt'">
+                <th class="sortable" [class.active]="sortedBy == 'publishedAt'" [class.desc]="sortedByType == 'desc'">
                     <span (click)="sortBy('publishedAt')">
-                        <i class="fas fa-sort mr-2"></i> Publish date
+                        Publish date
                     </span>
                 </th>
                 <th></th>

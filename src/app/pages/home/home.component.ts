@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   prevPageToken: string
 
   searchQuery = ''
-  searcMode: boolean
+  resultsPerPage = 8
 
   constructor(private api: YoutubeService) { }
 
@@ -29,19 +29,34 @@ export class HomeComponent implements OnInit {
   }
 
   fetchVideos = (pageToken: string = ''): void => {
-    this.api.fetchVideos(this.channelId, pageToken).subscribe((res: VideoResponse) => {
-      res.items.forEach(item => {
-        item.title = item.snippet.title
-        item.description = item.snippet.description
-        item.publishedAt = item.snippet.publishedAt
+    this.api.fetchVideos(this.channelId, pageToken).subscribe(this.handleResponse)
+  }
+
+  searchVideos = (e: KeyboardEvent): void => {
+    if (e.key == "Enter" && this.searchQuery != "") {
+      let queryParts = this.searchQuery.split(' ')
+
+      this.api.searchVideos(this.channelId, this.searchQuery, '').subscribe((res: VideoResponse) => {
+        res.items = res.items.filter((item: Video) => queryParts.some(q => item.snippet.title.toLowerCase().includes(q.toLowerCase())))
+        this.handleResponse(res)
       })
+    }
+    else if (this.searchQuery == "")
+      this.fetchVideos()
+  }
 
-      this.dataSource = new MatTableDataSource(res.items)
-      this.dataSource.sort = this.sort
-
-      this.nextPageToken = res.nextPageToken
-      this.prevPageToken = res.prevPageToken
+  handleResponse = (res: VideoResponse) => {
+    res.items.forEach(item => {
+      item.title = item.snippet.title
+      item.description = item.snippet.description
+      item.publishedAt = item.snippet.publishedAt
     })
+
+    this.dataSource = new MatTableDataSource(res.items)
+    this.dataSource.sort = this.sort
+
+    this.nextPageToken = res.items.length < this.api.resultsPerPage ? '' : res.nextPageToken
+    this.prevPageToken = res.items.length < this.api.resultsPerPage ? '' : res.prevPageToken
   }
 
   showDetails = (videoId: string): void => { }

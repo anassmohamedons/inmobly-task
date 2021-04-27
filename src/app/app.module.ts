@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

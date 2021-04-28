@@ -9,9 +9,21 @@ body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
 .btn {
   border-radius: 2px;
 
-  .btn-danger {
+  &.btn-danger {
     background-color: #E32B2F;
+
+    &:hover {
+      background-color: darken(#E32B2F, 10);
+    }
   }
+
+  &.btn-circle {
+    border-radius: 50%;
+  }
+}
+
+.w-50 {
+  width: 50px !important;
 }
 
 .navbar {
@@ -84,7 +96,7 @@ body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
 }
 
 @media screen and (max-width: 609px) {
-  .navbar-top-fix:not(.no-breakpoints) {
+  .navbar-top-fix:not(.no-breakpoints):not(.channel-mode) {
     padding-top: 120px;
   }
 }

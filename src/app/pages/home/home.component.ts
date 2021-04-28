@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Video, VideoResponse } from 'src/app/shared/models/video.interface';
+import { DbService } from 'src/app/shared/services/db/db.service';
 import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  channelId = 'UCWOA1ZGywLbqmigxE4Qlvuw'
+  channelId: string // UCWOA1ZGywLbqmigxE4Qlvuw
 
   videos: Video[] = []
   videosUnsorted: Video[] = []
@@ -27,10 +28,11 @@ export class HomeComponent implements OnInit {
 
   changeChannelMode = false
   newChannel: string
+  
+  constructor(private api: YoutubeService, private db: DbService, private router: Router) { }
 
-  constructor(private api: YoutubeService, private router: Router) { }
-
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.channelId = (await this.db.getSettings()).channelId
     this.fetchVideos()
   }
 
@@ -120,6 +122,7 @@ export class HomeComponent implements OnInit {
       }
 
       this.changeChannelMode = false
+      this.db.updateChannel(this.channelId)
     }
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Video, VideoResponse } from 'src/app/shared/models/video.interface';
 import { DbService } from 'src/app/shared/services/db/db.service';
+import { NetworkService } from 'src/app/shared/services/network/network.service';
 import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  channelId: string // UCWOA1ZGywLbqmigxE4Qlvuw
+  channelId: string
 
   videos: Video[] = []
   videosUnsorted: Video[] = []
@@ -28,17 +29,32 @@ export class HomeComponent implements OnInit {
 
   changeChannelMode = false
   newChannel: string
-  
-  constructor(private api: YoutubeService, private db: DbService, private router: Router) { }
+
+  constructor(private api: YoutubeService, private db: DbService, private router: Router, public connection: NetworkService) { }
 
   async ngOnInit() {
-    this.channelId = (await this.db.getSettings()).channelId
+    if (this.connection.isOnline) {
+      this.channelId = (await this.db.getSettings()).channelId
+      localStorage.setItem('channelId', this.channelId)
+    }
+    else {
+      const channelId = localStorage.getItem('channelId')
+      this.channelId = channelId ? channelId : 'UCWOA1ZGywLbqmigxE4Qlvuw'
+    }
+
     this.fetchVideos()
   }
 
   fetchVideos = (pageToken: string = ''): void => {
     this.isLoading = true
-    this.api.fetchVideos(this.channelId, pageToken).subscribe(this.handleResponse)
+
+    if (this.connection.isOnline)
+      this.api.fetchVideos(this.channelId, pageToken).subscribe(this.handleResponse)
+    else {
+      const localVideos = localStorage.getItem('videos')
+      this.videos = localVideos ? JSON.parse(localVideos) : []
+      this.isLoading = false
+    }
   }
 
   searchVideos = (e: KeyboardEvent): void => {
@@ -68,6 +84,12 @@ export class HomeComponent implements OnInit {
 
     this.nextPageToken = res.items.length < this.api.resultsPerPage ? '' : res.nextPageToken
     this.prevPageToken = res.items.length < this.api.resultsPerPage ? '' : res.prevPageToken
+
+    this.saveVideosToLocalStorage()
+  }
+
+  saveVideosToLocalStorage = () => {
+    localStorage.setItem('videos', JSON.stringify(this.videos))
   }
 
   showDetails = (video: Video): void => {

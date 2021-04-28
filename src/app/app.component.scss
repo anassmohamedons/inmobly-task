@@ -1,0 +1,30 @@
+.connection-status {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    padding: 10px 15px;
+    text-align: center;
+    color: white;
+    background: red;
+    border-radius: 5px 5px 0 0;
+    font-size: 14px;
+    transition: bottom .5s;
+
+    &.active {
+        background: green;
+    }
+
+    &.hidden {
+        bottom: -55px;
+    }
+
+    a {
+        color: white;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            color: white;
+        }
+    }
+}

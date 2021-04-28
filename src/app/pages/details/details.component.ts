@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Video, VideoResponse } from 'src/app/shared/models/video.interface';
 import { DbService } from 'src/app/shared/services/db/db.service';
+import { NetworkService } from 'src/app/shared/services/network/network.service';
 import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service';
 
 @Component({
@@ -17,11 +18,16 @@ export class DetailsComponent implements OnInit {
   isFavorited = false
   rating = 0
 
-  constructor(private route: ActivatedRoute, private api: YoutubeService, private db: DbService) { }
+  constructor(private route: ActivatedRoute, private api: YoutubeService, private db: DbService, public connection: NetworkService) { }
 
   ngOnInit(): void {
     this.videoId = this.route.snapshot.params['id']
     this.getVideo(this.videoId)
+
+    this.connection.connectionChanged.subscribe(status => {
+      if (status && this.isLoading)
+        this.getVideo(this.videoId)
+    })
   }
 
   getVideo = (videoId: string) => {

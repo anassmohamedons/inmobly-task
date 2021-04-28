@@ -11,7 +11,7 @@
         border-radius: 50%;
         transition: background-color .2s;
 
-        &:hover {
+        &:not([disabled]):hover {
             background-color: #e6e6e6;
         }
     }
@@ -27,7 +27,7 @@
     border-radius: 50%;
     transition: background-color .2s;
 
-    &:hover {
+    &:not([disabled]):hover {
         background-color: #e6e6e6;
     }
 }
@@ -73,7 +73,7 @@
                 color: black;
                 border-color: #CBCBCB;
 
-                &:hover {
+                &:not([disabled]):hover {
                     background: #E02C33;
                     border-color: #E02C33;
                     color: white;

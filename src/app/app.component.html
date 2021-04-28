@@ -1,1 +1,7 @@
 <router-outlet></router-outlet>
+
+<div class="connection-status" [class.active]="connected" [class.hidden]="!statusChanged">
+    <span>{{ connected ? 'Connected to the internet' : 'No internet connection' }}</span>
+    <button *ngIf="connected" type="button" class="btn btn-outline-light btn-sm ml-2" (click)="reload()">Reload</button>
+    <a *ngIf="connected" class="ml-3" (click)="statusChanged = false"><strong>x</strong></a>
+</div>

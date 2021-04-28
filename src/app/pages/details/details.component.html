@@ -6,7 +6,7 @@
         <div class="d-flex">
             <button type="button"
                 class="btn btn-light btn-circle w-50 h-50 d-flex align-items-center justify-content-center"
-                [routerLink]="['/favorites']">
+                [routerLink]="['/favorites']" [disabled]="!connection.isOnline">
                 <i class="fas fa-heart"></i>
             </button>
         </div>
@@ -14,7 +14,9 @@
 </nav>
 
 <div class="container navbar-top-fix no-breakpoints pr-0 pl-0 mb-5">
-    <div *ngIf="isLoading" class="loader">loading</div>
+    <div *ngIf="isLoading" class="loader-container">
+        <div class="loader">loading</div>
+    </div>
 
     <div *ngIf="!isLoading && !video" class="no-data">
         <i class="fas fa-video-slash"></i>

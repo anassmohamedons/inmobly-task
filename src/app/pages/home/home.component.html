@@ -3,17 +3,18 @@
         <a class="navbar-brand" [routerLink]="['']">
             <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
         </a>
-        <button type="button" class="btn btn-light change-channel-btn" (click)="showChannelChanger()">
+        <button type="button" class="btn btn-light change-channel-btn" (click)="showChannelChanger()"
+            [disabled]="!connection.isOnline">
             <i class="fas fa-exchange-alt mr-2"></i> <strong>Change channel</strong>
         </button>
         <div class="search-container d-flex">
             <button type="button"
                 class="btn btn-light btn-circle w-50 h-50 mr-2 d-flex align-items-center justify-content-center"
-                [routerLink]="['/favorites']">
+                [routerLink]="['/favorites']" [disabled]="!connection.isOnline">
                 <i class="fas fa-heart"></i>
             </button>
             <input type="text" class="form-control rounded-pill search-input" placeholder="Search by video title"
-                [(ngModel)]="searchQuery" (keydown)="searchVideos($event)">
+                [(ngModel)]="searchQuery" (keydown)="searchVideos($event)" [disabled]="!connection.isOnline">
         </div>
     </div>
 
@@ -28,7 +29,9 @@
 </nav>
 
 <div class="container navbar-top-fix pr-0 pl-0" [class.channel-mode]="changeChannelMode">
-    <div *ngIf="isLoading" class="loader">loading</div>
+    <div *ngIf="isLoading" class="loader-container">
+        <div class="loader">loading</div>
+    </div>
 
     <div *ngIf="!isLoading && videos.length == 0" class="no-data">
         <i class="fas fa-video-slash"></i>
@@ -60,7 +63,7 @@
                     <td><span class="title-header">{{ video.snippet.title }}</span></td>
                     <td><span class="publishedat-header">{{ video.snippet.publishedAt | date:'d-m-yyyy' }}</span></td>
                     <td>
-                        <button type="button" class="btn btn-outline-secondary"
+                        <button type="button" class="btn btn-outline-secondary" [disabled]="!connection.isOnline"
                             (click)="showDetails(video)">Details</button>
                     </td>
                 </tr>
@@ -70,11 +73,11 @@
 
     <div *ngIf="!isLoading && videos.length > 0" class="d-flex justify-content-end p-3">
         <button type="button" class="btn btn-secondary paginate-btn mr-1" (click)="paginate('prev')"
-            [disabled]="!prevPageToken">
+            [disabled]="!prevPageToken || !connection.isOnline">
             <i class="fas fa-caret-left"></i>
         </button>
         <button type="button" class="btn btn-secondary paginate-btn" (click)="paginate('next')"
-            [disabled]="!nextPageToken">
+            [disabled]="!nextPageToken || !connection.isOnline">
             <i class="fas fa-caret-right"></i>
         </button>
     </div>

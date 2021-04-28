@@ -1,0 +1,24 @@
+.feature-container {
+    display: flex;
+    align-items: flex-end;
+    max-height: 400px;
+    overflow: hidden;
+
+    .img-feature {
+        width: 100%;
+    }
+}
+
+hr {
+    margin: 0 -1rem;
+}
+
+.duration-container {
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .duration-container {
+        text-align: start;
+    }
+}

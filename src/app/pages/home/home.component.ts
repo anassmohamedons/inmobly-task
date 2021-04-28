@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Video, VideoResponse } from 'src/app/shared/models/video.interface';
-import { YoutubeService } from 'src/app/shared/services/youtube.service';
+import { YoutubeService } from 'src/app/shared/services/youtube/youtube.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
   changeChannelMode = false
   newChannel: string
 
-  constructor(private api: YoutubeService) { }
+  constructor(private api: YoutubeService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchVideos()
@@ -57,12 +58,6 @@ export class HomeComponent implements OnInit {
   }
 
   handleResponse = (res: VideoResponse) => {
-    res.items.forEach(item => {
-      item.title = item.snippet.title
-      item.description = item.snippet.description
-      item.publishedAt = item.snippet.publishedAt
-    })
-
     this.isLoading = false
     this.videos = res.items
     this.videosUnsorted = res.items
@@ -73,7 +68,9 @@ export class HomeComponent implements OnInit {
     this.prevPageToken = res.items.length < this.api.resultsPerPage ? '' : res.prevPageToken
   }
 
-  showDetails = (videoId: string): void => { }
+  showDetails = (video: Video): void => {
+    this.router.navigate([`watch/${video.snippet.resourceId.videoId}`])
+  }
 
   paginate = (type: 'next' | 'prev') => {
     if (type == 'next' && this.nextPageToken)
@@ -92,15 +89,15 @@ export class HomeComponent implements OnInit {
 
     if (column == 'title') {
       if (this.sortedByType == 'asc')
-        this.videos = this.videos.sort((a, b) => a.title.localeCompare(b.title))
+        this.videos = this.videos.sort((a, b) => a.snippet.title.localeCompare(b.snippet.title))
       else
-        this.videos = this.videos.sort((a, b) => b.title.localeCompare(a.title))
+        this.videos = this.videos.sort((a, b) => b.snippet.title.localeCompare(a.snippet.title))
     }
     else if (column == 'publishedAt') {
       if (this.sortedByType == 'asc')
-        this.videos = this.videos.sort((a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime())
+        this.videos = this.videos.sort((a, b) => new Date(a.snippet.publishedAt).getTime() - new Date(b.snippet.publishedAt).getTime())
       else
-        this.videos = this.videos.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+        this.videos = this.videos.sort((a, b) => new Date(b.snippet.publishedAt).getTime() - new Date(a.snippet.publishedAt).getTime())
     }
   }
 

@@ -6,7 +6,16 @@ body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
   font-family: Nunito, "Helvetica Neue", sans-serif;
 }
 
+.btn {
+  border-radius: 2px;
+
+  .btn-danger {
+    background-color: #E32B2F;
+  }
+}
+
 .navbar {
+  min-height: 67px;
   background: white !important;
   border-bottom: solid thin #F1F1F1;
 
@@ -68,20 +77,20 @@ body { margin: 0; font-family: Nunito, "Helvetica Neue", sans-serif; }
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .container {
     max-width: 100%;
   }
 }
 
 @media screen and (max-width: 609px) {
-  .navbar-top-fix {
+  .navbar-top-fix:not(.no-breakpoints) {
     padding-top: 120px;
   }
 }
 
 @media screen and (max-width: 311px) {
-  .navbar-top-fix {
+  .navbar-top-fix:not(.no-breakpoints) {
     padding-top: 166px;
   }
 }

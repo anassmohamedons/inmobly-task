@@ -52,11 +52,11 @@
                     <td>
                         <img [src]="video.snippet.thumbnails.medium.url" class="thumbnail" alt="video thumbnail">
                     </td>
-                    <td><span class="title-header">{{ video.title }}</span></td>
-                    <td><span class="publishedat-header">{{ video.publishedAt | date:'d-m-yyyy' }}</span></td>
+                    <td><span class="title-header">{{ video.snippet.title }}</span></td>
+                    <td><span class="publishedat-header">{{ video.snippet.publishedAt | date:'d-m-yyyy' }}</span></td>
                     <td>
                         <button type="button" class="btn btn-outline-secondary"
-                            (click)="showDetails(video.id)">Details</button>
+                            (click)="showDetails(video)">Details</button>
                     </td>
                 </tr>
             </tbody>

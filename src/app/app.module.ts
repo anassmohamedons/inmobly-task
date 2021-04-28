@@ -12,12 +12,15 @@ import { DetailsComponent } from './pages/details/details.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RatingModule } from 'ng-starrating';
+import { DurationFormatPipe } from './shared/pipes/duration-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    DurationFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    FormsModule
+    FormsModule,
+    RatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

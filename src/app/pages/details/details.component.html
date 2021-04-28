@@ -1,1 +1,72 @@
-<p>details works!</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" [routerLink]="['']">
+            <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
+        </a>
+    </div>
+</nav>
+
+<div class="container navbar-top-fix no-breakpoints pr-0 pl-0 mb-5">
+    <div *ngIf="isLoading" class="loader">loading</div>
+
+    <div *ngIf="!isLoading && !video" class="no-data">
+        <i class="fas fa-video-slash"></i>
+        <h3>Invalid video</h3>
+    </div>
+
+    <div *ngIf="!isLoading && video">
+        <div class="feature-container">
+            <img [src]="video.snippet.thumbnails.maxres.url || video.snippet.thumbnails.medium.url" alt="video feature" class="img-feature">
+        </div>
+
+        <div class="pl-3 pr-3">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="p-3">
+                        <h5 class="mb-0 mt-2"><strong>{{ video.snippet.title }}</strong></h5>
+                    </div>
+                </div>
+                <div class="col align-self-end">
+                    <div class="p-3 d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger">Add to favorite</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <h5 class="mb-0 mt-2 d-inline-block mr-2"><strong>Rate now</strong></h5>
+                        <star-rating [value]="2" [totalstars]="5" checkedcolor="red" uncheckedcolor="#FDDBD9"
+                            size="24px" class="d-inline-block"></star-rating>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3 mt-2 duration-container">
+                        <strong>Duration</strong> {{ durationToSeconds(video.contentDetails.duration) | durationFormat:'s':'hhmmss' }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="p-3 mt-2 d-flex justify-content-end">
+                        <i class="fas fa-eye mr-2" style="line-height: 24px"></i> <strong
+                            class="mr-4">{{ formatNumber(video.statistics.viewCount) }}</strong>
+                        <i class="fas fa-thumbs-up mr-2" style="line-height: 22px"></i> <strong>{{ formatNumber(video.statistics.likeCount) }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-3">
+                        <p class="text-danger"><strong>Published on {{ video.snippet.publishedAt | date:'MMMM d, yyyy' }}</strong></p>
+                        <p class="mb-0">{{ video.snippet.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

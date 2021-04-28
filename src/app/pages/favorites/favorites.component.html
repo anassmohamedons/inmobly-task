@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" [routerLink]="['']">
+            <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
+        </a>
+        <div class="d-flex">
+            <button *ngIf="videos.length > 0" type="button" class="btn btn-light d-flex align-items-center justify-content-center" (click)="clearFavorites()">
+                <i class="fas fa-trash-alt mr-2"></i> <strong>Delete all</strong>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container navbar-top-fix no-breakpoints pr-0 pl-0 mb-5">
+    <div *ngIf="isLoading" class="loader">loading</div>
+
+    <div *ngIf="!isLoading && videos.length == 0" class="no-data">
+        <i class="fas fa-heart-broken"></i>
+        <h3>No favorites found</h3>
+        <button type="button" class="btn btn-danger mt-2" routerLink="..">Go back</button>
+    </div>
+
+    <div *ngIf="!isLoading && videos.length > 0" class="table-responsive-lg">
+        <table class="table">
+            <thead>
+                <th></th>
+                <th>Title</th>
+                <th>Publish date</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let video of videos; let index = index">
+                    <td>
+                        <img [src]="video.snippet.thumbnails.medium.url" class="thumbnail" alt="video thumbnail">
+                    </td>
+                    <td><span class="title-header">{{ video.snippet.title }}</span></td>
+                    <td><span class="publishedat-header">{{ video.snippet.publishedAt | date:'d-m-yyyy' }}</span></td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary mr-1 mb-1"
+                            (click)="showDetails(video)">Details</button>
+                        <button type="button" class="btn btn-danger mb-1" (click)="deleteFavorite(video, index)">
+                            <i class="fas fa-trash-alt clr-white"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

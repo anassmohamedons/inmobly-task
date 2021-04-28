@@ -141,13 +141,17 @@
     }
 }
 
-@media screen and (max-width: 609px) {
+@media screen and (max-width: 664px) {
     .search-container {
         width: 100%;
         margin-left: 0;
 
         .search-input {
-            width: 100%;
+            width: calc(100% - 60px);
+            margin-top: 10px;
+        }
+
+        button {
             margin-top: 10px;
         }
     }

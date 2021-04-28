@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   showDetails = (video: Video): void => {
-    this.router.navigate([`watch/${video.snippet.resourceId.videoId}`])
+    this.router.navigate([`/watch/${video.snippet.resourceId.videoId}`])
   }
 
   paginate = (type: 'next' | 'prev') => {

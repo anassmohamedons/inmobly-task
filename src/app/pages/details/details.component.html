@@ -3,6 +3,13 @@
         <a class="navbar-brand" [routerLink]="['']">
             <img src="assets/logo.png" class="d-flex align-self-center" alt="logo" height="30">
         </a>
+        <div class="d-flex">
+            <button type="button"
+                class="btn btn-light btn-circle w-50 h-50 d-flex align-items-center justify-content-center"
+                [routerLink]="['/favorites']">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
     </div>
 </nav>
 
@@ -12,6 +19,7 @@
     <div *ngIf="!isLoading && !video" class="no-data">
         <i class="fas fa-video-slash"></i>
         <h3>Invalid video</h3>
+        <button type="button" class="btn btn-danger mt-2" routerLink="..">Go back</button>
     </div>
 
     <div *ngIf="!isLoading && video">

@@ -14,13 +14,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'ng-starrating';
 import { DurationFormatPipe } from './shared/pipes/duration-format.pipe';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DetailsComponent,
-    DurationFormatPipe
+    DurationFormatPipe,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

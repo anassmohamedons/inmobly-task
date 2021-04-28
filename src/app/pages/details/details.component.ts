@@ -39,7 +39,7 @@ export class DetailsComponent implements OnInit {
   toggleFavorite = () => {
     if (this.isFavorited)
       this.db.deleteFavorite(this.videoId)
-    else this.db.addFavorite(this.videoId)
+    else this.db.addFavorite(this.videoId, this.video)
 
     this.isFavorited = !this.isFavorited
   }

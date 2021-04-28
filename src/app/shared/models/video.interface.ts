@@ -5,6 +5,7 @@ export interface VideoResponse {
 }
 
 export interface Video {
+    videoId: string
     snippet: {
         title: string
         description: string

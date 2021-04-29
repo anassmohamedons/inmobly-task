@@ -13,7 +13,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`
 ## Offline run
 The project utilizes the **Service Worker** and **LocalStorage** to make the app available offline.
 
-To run the project on offline mode, please firstly install `live-server` NPM package, and then run the following command `http-server -p 8080 -c-1 .\dist\inmobly-task\` in the project **root** folder
+To run the project on offline mode, run the build command `ng build --prod`, then install the `live-server` NPM package if its not installed already, and then run the following command `http-server -p 8080 -c-1 .\dist\inmobly-task\` in the project **root** folder
 
 This will run the **Service Worker** production version of the project.
 

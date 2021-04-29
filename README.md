@@ -1,27 +1,67 @@
-# InmoblyTask
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
+# InMobly Task
+Implement a **SPA** single page application displaying list of videos in a YouTube channel
 
-## Development server
+---
+**All project code has comments explaining what i'm doing*
+**Could not use minification using gulp or grunt as i'm using Angular 11 and it automatically does the minification on build*
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Run
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`
 
-## Code scaffolding
+## Offline run
+The project utilizes the **Service Worker** and **LocalStorage** to make the app available offline.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To run the project on offline mode, please firstly install `live-server` NPM package, and then run the following command `http-server -p 8080 -c-1 .\dist\inmobly-task\` in the project **root** folder
 
-## Build
+This will run the **Service Worker** production version of the project.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+**Please make sure that the Service Worker is registered and working properly from the chrome developer tools*
 
-## Running unit tests
+## Project Structure
+	app/
+	├── pages/
+	│   ├── details
+	│   ├── favorites
+	│   └── home
+	└── shared/
+	    ├── models
+	    ├── pipes
+	    └── services/
+	        ├── db
+	        ├── network
+	        └── youtube
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The **pages** folder contains all the 3 screens components
+1. **Details** screen: Displays the details of the selected video, with the ability to add to favorites and rating
+2. **Favorites** screen: Displays all the favorited videos, and the ability to delete them
+3. **Home** screen: Displays a list of channel videos, with pagination and sorting, and the ability to search
 
-## Running end-to-end tests
+The **shared** folder contains shared **models, pipes and services**
+4. **models** folder: contains all the model interfaces used in the project
+5. **pipes** folder: contains one pipe used to format duration to readable string
+6. **services** folder: contains all the services used by the project
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Services
+1. **DbService** used to interact with the Firestore database
+2. **YoutubeService** used to interact with the YouTube API v3
+3. **NetworkService** used to notify about network status changes
 
-## Further help
+## Models
+The project has 3 defined interfaces:
+1. **ChannelResponse** used by the API service to represent the channel request response
+2. **Settings** used by the DB service to represent the settings data
+3. **VideoResponse** & **Video** used by the API service to represent the video items response
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Pipes
+1. **DurationFormatPipe** used to format duration by seconds to readable duration string. *ex: 01:30:00*
+
+## Firestore
+Here is a screenshot of the collection schema from the Firebase console
+
+![firebase firestore schema](./src/assets/firebase.jpg)
+
+## Packages used
+1. `@angular/fire` && `firebase` for connecting to firebase and Firestore database
+2. `bootstrap` to use bootstrap CSS styles and styled components
+3. `ng-starrating` the rating component in the video details screen

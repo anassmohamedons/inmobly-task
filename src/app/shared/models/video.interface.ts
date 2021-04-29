@@ -1,9 +1,11 @@
+// Interface used in the YouTube API video route
 export interface VideoResponse {
     items: Video[],
     nextPageToken: string
     prevPageToken: string
 }
 
+// Interface used to layout the structure for the video response items
 export interface Video {
     videoId: string
     snippet: {

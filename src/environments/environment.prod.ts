@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  // Firebase configuration object
   firebase: {
     apiKey: "AIzaSyBIGbzhZePd9-EIMj4509SnmSBNo1WlDYM",
     authDomain: "inmobly-task-58e70.firebaseapp.com",

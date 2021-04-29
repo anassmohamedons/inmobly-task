@@ -5,6 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core'
   pure: false
 })
 export class DurationFormatPipe implements PipeTransform {
+  // This custom pipe is used to format duration seconds to
+  // A readable string. ex: 01:30:00
+  // Pipe taken from the following repo https://github.com/Locheed/ng-duration-format-pipe
   transform(value: any, arg1: any, arg2: any): any {
     let days: any
     let seconds: any
@@ -46,6 +49,7 @@ export class DurationFormatPipe implements PipeTransform {
   }
 
   private format(arg2: string, seconds: any, minutes: any, hours: any, days: any) {
+    // Fixed some issue with code from the above mentioned repo
     days = (days < 10) ? '0' + days : days
     hours = (hours < 10) ? '0' + hours : hours
     minutes = (minutes < 10) ? '0' + minutes : minutes

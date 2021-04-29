@@ -6,6 +6,8 @@ Implement a **SPA** single page application displaying list of videos in a YouTu
 **All project code has comments explaining what i'm doing*
 
 **Could not use minification using gulp or grunt as i'm using Angular 11 and it automatically does the minification on build*
+---
+You can [Click here](https://anassmohamedons.github.io/inmobly-task/) to view the online version of the project
 
 ## Run
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`
